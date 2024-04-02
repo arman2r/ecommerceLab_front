@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20.9.0  # Utiliza la versión de Node.js 20.9.0
+    commands:
+      - npm install -g @angular/cli  # Instala Angular CLI de forma global
+      - npm install  # Instala las dependencias del proyecto
+
+  pre_build:
+    commands:
+      - ng build --prod  # Construye la aplicación Angular para producción
+
+artifacts:
+  files:
+    - '**/*'  # Incluye todos los archivos generados en la carpeta actual
+  base-directory: dist/  # Especifica la carpeta donde se encuentra la aplicación compilada
