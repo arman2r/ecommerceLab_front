@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 20.9.0  # Utiliza la versión de Node.js 20.9.0
+      nodejs: 20  # Utiliza la versión de Node.js 20.9.0
     commands:
       - npm install -g @angular/cli  # Instala Angular CLI de forma global
       - npm install  # Instala las dependencias del proyecto
