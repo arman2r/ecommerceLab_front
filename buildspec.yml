@@ -10,7 +10,7 @@ phases:
 
   pre_build:
     commands:
-      - ng build --prod  # Construye la aplicación Angular para producción
+      - ng build  # Construye la aplicación Angular para producción
 
 artifacts:
   files:
