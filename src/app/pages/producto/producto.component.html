@@ -1,0 +1,123 @@
+<div
+  [ngClass]="{ 'flex justify-center mt-8': isProductDetail }"
+  class="w-full h-full"
+>
+  <div [ngClass]="{ 'w-100 md:w-4/5': isProductDetail }" class="w-full h-full">
+    <mat-card
+      class="transition shadow-inner example-card h-full hover:shadow-2xl"
+    >
+      <div
+        [ngClass]="{ 'grid md:grid-cols-2': isProductDetail }"
+        class="h-full" *ngIf="productData"
+      >
+        <img 
+          [ngClass]="{ hidden: isProductDetail === false }"
+          class="focus:pointer-events-auto sticky w-full"
+          [routerLink]="['/producto', productData.id]"
+          mat-card-image
+          [src]="productData.urlImagen"
+        />
+        <div
+          [ngClass]="[
+            isProductDetail === true
+              ? 'h-full flex flex-col'
+              : 'flex flex-col h-full'
+          ]"
+        >
+          <mat-card-header>
+            <mat-card-title-group class="text-left">
+              <mat-card-title>
+                <span class="w-full text-ellipsis overflow-hidden">
+                  {{
+                    isProductDetail
+                      ? productData.nombre
+                      : productData.nombre.slice(0, 20).concat("...")
+                  }}
+                </span>
+              </mat-card-title>
+              <mat-card-subtitle>{{
+                productData.precio | currency : "$" : "symbol" : "1.0-0"
+              }}</mat-card-subtitle>
+            </mat-card-title-group>
+          </mat-card-header>
+
+          <img
+            [ngClass]="{ hidden: isProductDetail === true }"
+            class="focus:pointer-events-auto"
+            [routerLink]="['/producto', productData.id]"
+            mat-card-image
+            [src]="productData.urlImagen"
+          />
+
+          <mat-card-content class="text-left">
+            <ng-container *ngIf="isProductDetail; else truncatedDescription">
+              <p
+                class="py-4"
+                [innerHTML]="formatDescription(productData.descripcion)"
+              ></p>
+            </ng-container>
+            <ng-template #truncatedDescription>
+              <p
+                class="py-4"
+                [innerHTML]="
+                  formatDescription(
+                    productData.descripcion.slice(0, 95).concat('...')
+                  )
+                "
+              ></p>
+            </ng-template>
+          </mat-card-content>
+          <span class="example-spacer"></span>
+          <mat-card-actions
+            [ngClass]="{ 'sticky bottom-0': isProductDetail }"
+            class="bg-white py-3"
+          >
+            <div class="flex justify-between w-full items-center">
+              <button mat-icon-button (click)="favoriteProduct(productData)">
+                <mat-icon>{{
+                  isFavorite(productData) ? "favorite" : "favorite_outline"
+                }}</mat-icon>
+              </button>
+              <div class="flex flex-wrap justify-end items-center gap-4">
+                <mat-button-toggle-group
+                  *ngIf="isProductDetail"
+                  name="favoriteColor"
+                  aria-label="Favorite Color"
+                >
+                  <mat-button-toggle (click)="decrementQuantity()"
+                    >-</mat-button-toggle
+                  >
+                  <mat-button-toggle>{{ quantity }}</mat-button-toggle>
+                  <mat-button-toggle
+                    (click)="incrementQuantity(productData.stock)"
+                    >+</mat-button-toggle
+                  >
+                </mat-button-toggle-group>
+                <div class="hidden lg:flex">
+                  <button mat-button (click)="carritoProduct(productData)">
+                    {{
+                      isCartAdd(productData) ? "Agregado" : "Agregar al carrito"
+                    }}
+                  </button>
+                </div>
+                <div class="flex lg:hidden">
+                  <button mat-icon-button (click)="carritoProduct(productData)">
+                    <mat-icon
+                      *ngIf="!isCartAdd(productData)"
+                      fontSet="material-icons-outlined"
+                    >
+                      shopping_cart_outline"
+                    </mat-icon>
+                    <mat-icon *ngIf="isCartAdd(productData)">
+                      shopping_cart
+                    </mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </mat-card-actions>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

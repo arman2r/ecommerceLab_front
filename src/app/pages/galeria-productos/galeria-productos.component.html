@@ -1,0 +1,12 @@
+<section #galeriaProductos class="container-store flex justify-center py-4 w-full h-[83vh] bg-purple-50 overflow-auto">
+  <div
+    class="flex flex-wrap container text-center w-full sm:w-4/5 lg:w-4/5"
+  >
+    <h1 class="w-full">Catálogo de productos</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 py-5 items-stretch">
+      <ng-container *ngFor="let producto of allProducts">
+        <app-producto class="animate__animated animate__fadeIn" [productData]="producto"></app-producto>
+      </ng-container>
+    </div>
+  </div>
+</section>

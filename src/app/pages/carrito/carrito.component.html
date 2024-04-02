@@ -1,0 +1,85 @@
+<section class="flex justify-center py-5">
+  <div class="w-full md:w-1/2">
+    <h1>Carrito de compras</h1>
+    <mat-list>
+      <div mat-subheader>Productos</div>
+      <mat-list-item *ngFor="let producto of productos">
+        <div class="flex flex-wrap justify-between gap-3">
+          <div
+            class="flex justify-center gap-2 w-3/5 items-center"
+            [routerLink]="['/producto', producto.id, producto.cantidad]"
+          >
+            <div
+              class="w-8 h-8 rounded-3xl bg-gray-300 overflow-hidden flex justify-center"
+            >
+              <img
+                [src]="producto.urlImagen"
+                [alt]="producto.nombre"
+                class="object-fill"
+              />
+            </div>
+            <div
+              style="width: calc(100% - 2rem)"
+              class="text-ellipsis overflow-hidden"
+            >
+              {{ producto.nombre }}
+            </div>
+          </div>
+          <div class="w-1/4 text-right flex flex-wrap justify-end items-center">
+            <span
+              [routerLink]="['/producto', producto.id, producto.cantidad]"
+              matTooltip="Modificar cantidad"
+              [matTooltipPosition]="'above'"
+              matTooltipHideDelay="300"
+              aria-label="Describe la cantidad agregada por producto"
+              ><mat-chip class="me-1">{{ producto.cantidad }} x</mat-chip></span
+            >
+            <span *ngIf="producto.cantidad">{{
+              producto.precio * producto.cantidad
+                | currency : "$" : "symbol" : "1.0-0"
+            }}</span>
+          </div>
+        </div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <div class="flex flex-wrap justify-between gap-3 items-center">
+          <div mat-subheader>Totales</div>
+          <div>
+            <span>{{ totales | currency : "$" : "symbol" : "1.0-0" }}</span>
+          </div>
+        </div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <div class="flex flex-wrap justify-between gap-3 items-center">
+        <div class="w-full" mat-subheader>
+          Confirmar Compra {{ isAuthenticated }}
+        </div>
+        <div
+          class="flex flex-wrap gap-3"
+          *ngIf="isAuthenticated; else loginRegisterButtons"
+        >
+          <button mat-stroked-button class="hover:bg-purple-400">
+            Confirmar Compra
+          </button>
+        </div>
+        <ng-template #loginRegisterButtons>
+          <!-- Aquí van los botones para el usuario no autenticado -->
+          <a
+            mat-stroked-button
+            [routerLink]="['/register']"
+            class="hover:bg-purple-400"
+            >Registrarme</a
+          >
+          <button
+            mat-stroked-button
+            [routerLink]="['/login']"
+            class="hover:bg-purple-400"
+          >
+            Ingresar
+          </button>
+        </ng-template>
+      </div>
+    </mat-list>
+  </div>
+</section>

@@ -1,0 +1,36 @@
+<mat-toolbar>  
+  <button
+      *ngIf="isAuthenticated"
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with person icon"
+    >
+      <mat-icon>person</mat-icon>
+    </button>
+  <span>Ecommerce Lab</span>
+  <span class="example-spacer"></span>
+  <button
+    mat-icon-button
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+  >
+    <mat-icon [matBadge]="cantidadFavoritos">favorite</mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with shopping_cart icon"
+    [routerLink]="['/carrito']"
+  >
+    <mat-icon [matBadge]="cantidadCarrito">shopping_cart</mat-icon>
+  </button>
+  <button
+      *ngIf="isAuthenticated"
+      mat-icon-button
+      class="example-icon md:ms-3"
+      aria-label="Example icon-button with logout icon"
+      (click)="logout()"
+    >
+      <mat-icon>logout</mat-icon>
+    </button>
+</mat-toolbar>
